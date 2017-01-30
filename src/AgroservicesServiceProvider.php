@@ -1,6 +1,6 @@
 <?php
 
-namespace Fairhypo\Agrostatic;
+namespace Fairhypo\Agroservices;
 
 use Illuminate\Support\ServiceProvider;
 
