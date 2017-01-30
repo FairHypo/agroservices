@@ -4,7 +4,7 @@ namespace Fairhypo\Agrostatic;
 
 use Illuminate\Support\ServiceProvider;
 
-class AgrostaticServiceProvider extends ServiceProvider
+class AgroservicesServiceProvider extends ServiceProvider
 {
     public function boot()
     {
