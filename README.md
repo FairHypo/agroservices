@@ -30,7 +30,7 @@ Add the service provider to your `config/app.php` file:
     'providers'     => array(
 
         //...
-        Fairhypo\Agrostatic\AgroservicesServiceProvider::class,
+        Fairhypo\Agroservices\AgroservicesServiceProvider::class,
 
     ),
 

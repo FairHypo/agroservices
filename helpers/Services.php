@@ -29,7 +29,7 @@ function sendTelegram( $email = null, $message = null )
     $response = $client->request('POST', env('SERVICES_HOST') . '/api/telegram', [
         'headers' => [
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$accessToken,
+            'Authorization' => 'Bearer ' . $accessToken,
         ],
         'form_params' => [
             'email'   => $email,
@@ -49,7 +49,7 @@ function sendSms( $phone = null, $message = null )
     $response = $client->request('POST', env('SERVICES_HOST') . '/api/telegram', [
         'headers' => [
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$accessToken,
+            'Authorization' => 'Bearer ' . $accessToken,
         ],
         'form_params' => [
             'phone'   => $phone,
@@ -71,13 +71,34 @@ function sendEmail( $email = null, $message = null )
     $response = $client->request('POST', env('SERVICES_HOST') . '/api/telegram', [
         'headers' => [
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$accessToken,
+            'Authorization' => 'Bearer ' . $accessToken,
         ],
         'form_params' => [
             'email'   => $email,
             'message' => $message,
             'template_id' => 'test',
             'json'    => 'test'
+        ],
+    ]);
+
+    return $response;
+}
+
+function addMailChimp( $email = null, $list_id = null, $json = null )
+{
+    $client = new GuzzleHttp\Client;
+
+    $accessToken = env('SERVICES_TOKEN');
+
+    $response = $client->request('POST', env('SERVICES_HOST') . '/api/subscription', [
+        'headers' => [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $accessToken,
+        ],
+        'form_params' => [
+            'email'   => $email,
+            'list_id' => $list_id,
+            'json'    => $json
         ],
     ]);
 
