@@ -10,17 +10,17 @@ function getServicesToken($grant_type = 'client_credentials', $client_id = null,
 
     $response = $guzzle->post(env('SERVICES_HOST') . '/oauth/token', [
         'form_params' => [
-            'grant_type' => $grant_type,
-            'client_id' => $client_id,
+            'grant_type'    => $grant_type,
+            'client_id'     => $client_id,
             'client_secret' => $client_secret,
-            'scope' => $scope,
+            'scope'         => $scope,
         ],
     ]);
 
     return $response;
 }
 
-function sendTelegram( $email = null, $message = null )
+function sendTelegram( $email = null, $message = null, $template_id = 'test', $json = 'test' )
 {
     $client = new GuzzleHttp\Client;
 
@@ -31,16 +31,18 @@ function sendTelegram( $email = null, $message = null )
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $accessToken,
         ],
-        'form_params' => [
-            'email'   => $email,
-            'message' => $message,
+        'form_params'     => [
+            'email'       => $email,
+            'message'     => $message,
+            'template_id' => $template_id,
+            'json'        => $json
         ],
     ]);
 
     return $response;
 }
 
-function sendSms( $phone = null, $message = null )
+function sendSms( $phone = null, $message = null, $template_id = 'test', $json = 'test' )
 {
     $client = new GuzzleHttp\Client;
 
@@ -51,18 +53,18 @@ function sendSms( $phone = null, $message = null )
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $accessToken,
         ],
-        'form_params' => [
-            'phone'   => $phone,
-            'message' => $message,
-            'template_id' => 'test',
-            'json'    => 'test'
+        'form_params'     => [
+            'phone'       => $phone,
+            'message'     => $message,
+            'template_id' => $template_id,
+            'json'        => $json
         ],
     ]);
 
     return $response;
 }
 
-function sendEmail( $email = null, $message = null )
+function sendEmail( $email = null, $message = null, $template_id = 'test', $json = 'test' )
 {
     $client = new GuzzleHttp\Client;
 
@@ -73,11 +75,11 @@ function sendEmail( $email = null, $message = null )
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $accessToken,
         ],
-        'form_params' => [
-            'email'   => $email,
-            'message' => $message,
-            'template_id' => 'test',
-            'json'    => 'test'
+        'form_params'     => [
+            'email'       => $email,
+            'message'     => $message,
+            'template_id' => $template_id,
+            'json'        => $json
         ],
     ]);
 
@@ -103,4 +105,16 @@ function addMailChimp( $email = null, $list_id = null, $json = null )
     ]);
 
     return $response;
+}
+
+function getUtm()
+{
+    $utms_get = request()->all();
+    $utms_cookie = request()->cookie();
+    $utms = array_flip(explode(',', env('SERVICES_UTM')));
+    return [
+        'utms_get'    => array_intersect_key($utms_get, $utms),
+        'utms_cookie' => array_intersect_key($utms_cookie, $utms),
+        '$utms'       => $utms,
+    ];
 }
